@@ -10,7 +10,7 @@
 
 <h2>150px wide</h2>
 
-<div id='slider' class='swipe' style='width:150px'>
+<!-- <div id='slider' class='swipe' style='width:150px'>
   <ul>
     <li style='display:block'><div>1</div></li>
     <li style='display:none'><div>2</div></li>
@@ -31,12 +31,35 @@
     <li style='display:none'><div>4</div></li>
     <li style='display:none'><div>5</div></li>
   </ul>
-</div>
+</div> -->
 
 
 <h2>Full width</h2>
 
-<div id='slider3' class='swipe'>
+<div class="viewport">
+  <div class="swipe-container">
+    <div id="andmag" class="swipe">
+      <div class="swipe-wrap">      
+        <div style="background-color:blue;" class="item-0">1</div>
+        <div style="background-color:green;" class="item-1">2</div>  
+        <div style="background-color:red;" class="item-2">3</div>
+        <div style="background-color:pink;" class="item-3">4</div>
+        <div style="background-color:grey;" class="item-4">5</div>
+        <div style="background-color:purple;" class="item-5">6</div>
+        <div style="background-color:yellow;" class="item-6">7</div>
+      </div>
+    </div>  
+  </div>
+</div>
+<div style="clear:both"></div>
+<div class="viewport2">
+  <a href='#' onclick='andmag.prev();return false;'>prev</a> 
+  <a href='#' onclick='andmag.next();return false;'>next</a>
+</div>
+
+
+
+<!-- <div id='slider3' class='swipe'>
   <ul>
     <li style='display:block'><div>1</div></li>
     <li style='display:none'><div>2</div></li>
@@ -48,9 +71,9 @@
 
 <a href='#' onclick='slider3.prev();return false;'>prev</a> 
 <a href='#' onclick='slider3.next();return false;'>next</a>
-<br><br>
+<br><br> -->
 
-<h2>Arbitrary Elements</h2>
+<!-- <h2>Arbitrary Elements</h2>
 
 <div id='slider4' class='swipe'>
   <div>
@@ -64,15 +87,18 @@
 
 <a href='#' onclick='slider4.prev();return false;'>prev</a> 
 <a href='#' onclick='slider4.next();return false;'>next</a>
-<br><br>
+<br><br> -->
 
 
-<script src='swipe.js'></script>
+<!-- <script src='swipe.js'></script> -->
+<script src='andmag.js'></script>
 <script>
-new Swipe(document.getElementById('slider'));
-new Swipe(document.getElementById('slider2'));
-var slider3 = new Swipe(document.getElementById('slider3'));
-var slider4 = new Swipe(document.getElementById('slider4'));
+// new Swipe(document.getElementById('slider'));
+// new Swipe(document.getElementById('slider2'));
+// var slider3 = new Swipe(document.getElementById('slider3'));
+// var slider4 = new Swipe(document.getElementById('slider4'));
+var andmag = new ANDMAG(document.getElementById('andmag'));
+
 </script>
 
 </body> 

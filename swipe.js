@@ -56,6 +56,7 @@ Swipe.prototype = {
     // get and measure amt of slides
     this.slides = this.element.children;
     this.length = this.slides.length;
+    this.initialLength = this.length;
 
     // return immediately if their are less than two slides
     if (this.length < 2) return null;
@@ -79,6 +80,8 @@ Swipe.prototype = {
       el.style.verticalAlign = 'top';
     }
 
+
+
     // set start position and force translate to remove initial flickering
     this.slide(this.index, 0); 
 
@@ -97,7 +100,8 @@ Swipe.prototype = {
     }
 
     // set duration speed (0 represents 1-to-1 scrolling)
-    style.webkitTransitionDuration = style.MozTransitionDuration = style.msTransitionDuration = style.OTransitionDuration = style.transitionDuration = duration + 'ms';
+    style.webkitTransitionDuration = style.MozTransitionDuration = style.msTransitionDuration
+     = style.OTransitionDuration = style.transitionDuration = duration + 'ms';
 
     // translate to given index position
     style.MozTransform = style.webkitTransform = 'translate3d(' + -(index * this.width) + 'px,0,0)';
@@ -132,8 +136,34 @@ Swipe.prototype = {
     this.delay = delay || 0;
     clearTimeout(this.interval);
 
-    if (this.index < this.length - 1) this.slide(this.index+1, this.speed); // if not last slide
-    else this.slide(0, this.speed); //if last slide return to start
+    
+
+
+    //if (this.index < this.length - 1) {
+    //  this.slide(this.index+1, this.speed); // if not last slide
+    //}
+
+    //else{
+      //Copy last to first
+    
+
+      this.slide(this.index+1, this.speed); // if not last slide
+
+  var last = this.slides[this.length-1];
+    first = this.slides[0];
+    
+    var parent = first.parentNode;
+    parent.appendChild(first);
+    //parent.removeChild(first);
+
+    //recalculate length and width
+    this.slides = this.element.children;
+    this.length = this.slides.length;
+    this.element.style.width = Math.ceil(this.slides.length * this.width) + 'px';
+
+
+      // this.slide(0, this.speed); //if last slide return to start
+    //} 
 
   },
 
