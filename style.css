@@ -10,6 +10,9 @@ html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, del, dfn, em, 
 body {
   -webkit-text-size-adjust:none;
   font-family:sans-serif;
+  max-width: 640px;
+  margin: 0 auto;
+  border: 1px solid gray;
 }
 h1 {
   font-size:36px;
@@ -45,13 +48,12 @@ img{
   user-drag: none;
   -moz-user-select: none;
   -webkit-user-drag: none;
-  max-height:195px;
 }
 
 .swipe {
   overflow: hidden;
   display:block;
-  height:195px;
+  
   width:100%;
   left:0;
   top:0;
@@ -64,9 +66,11 @@ img{
   position:absolute;
   padding: 0 5%;
 }
-.swipe-wrap div {    
+.swipe-wrap  > div {  
+  
   width: 90%;
-  padding:  0; 
+  
+  
   position:relative;
   left:0; top: 0; 
   text-align: center;
@@ -74,15 +78,35 @@ img{
   -webkit-transform: translate3d(0px, 0px, 0px);
 }
 
+.image-container{
+  position:relative;
+  padding: 0 5px;
+  background-color:white;  
+}
+
 
 .viewport{
   position:relative;
+  
   width:100%;
   margin: 0 auto;
   display:block;
-  height:195px;
+  
+
 
 }
+
+
+.caption{
+  color:white;
+  position:absolute!important;
+  left: 0; bottom: 0;
+  background-color:rgba(0,0,0,0.5);
+  text-align:center;
+  width:100%;
+  padding: 5px 0;
+}
+
 .viewport2{
   text-align: center;
   margin-top: 80px;

@@ -1,4 +1,4 @@
-window.ANDMAG = function(element,options){
+window.Swipe = function(element,options){
 	
 	
 	// return immediately if element doesn't exist
@@ -6,9 +6,13 @@ window.ANDMAG = function(element,options){
 
 
 
-	
-	this.index = 0;
-	this.speed = 200;
+	this.options = options || {};
+	this.index = this.options.startSlide || 0;
+	this.speed = this.options.speed || 200;
+	this.transitionEnd = this.options.transitionEnd || function() {};
+
+	//the index of this swipeinstance on the page.
+	this.swipeIndex = options.swipeIndex || 0;
 
 
 
@@ -50,7 +54,7 @@ window.ANDMAG = function(element,options){
 		
 };
 
-ANDMAG.prototype = {
+Swipe.prototype = {
 	setup: function(that){
 
 		console.log("--setup--");
@@ -72,10 +76,12 @@ ANDMAG.prototype = {
 		}
 		that.element = that.container.children[0]; // the slide pane'
 
-		//get widths
+		//get width and heights
 		that.parentWidth = Math.ceil(("getBoundingClientRect" in that.parent) ? that.parent.getBoundingClientRect().width : that.parent.offsetWidth);
 	    that.width = Math.ceil(("getBoundingClientRect" in that.container) ? that.container.getBoundingClientRect().width : that.container.offsetWidth);
 	    that.elementWidth = that.parentWidth;
+
+	    
 	    
 
 	    //set widths
@@ -85,6 +91,19 @@ ANDMAG.prototype = {
     	for(var i = 0; i < that.container.children.length; i++){
     		that.container.children[i].style.width = that.elementWidth + "px";
     	}
+
+		//Set the full width (initial with is set to something smaller
+		that.parent.style.width = "100%";
+
+
+    	//get heights
+    	that.parentWidth = Math.ceil(("getBoundingClientRect" in that.parent) ? that.parent.getBoundingClientRect().height : that.parent.offsetHeight);
+    	that.height = Math.ceil(("getBoundingClientRect" in that.container) ? that.container.getBoundingClientRect().height : that.container.offsetHeight);
+	    
+    	//set heights
+    	that.container.parentNode.style.height = that.height + "px";
+    	that.parent.style.height = that.height + "px";
+
 
 	    console.log("Width: " + that.width);
 	    // return immediately if measurement fails
@@ -107,10 +126,10 @@ ANDMAG.prototype = {
       case 'mousemove': this.onTouchMove(e); break;
       case 'mouseup': this.onTouchEnd(e); break;
       case 'mouseout': this.onTouchEnd(e); break;
-      case 'webkitTransitionEnd':
+      /*case 'webkitTransitionEnd':
       case 'msTransitionEnd':
       case 'oTransitionEnd':
-      case 'transitionend': this.transitionEnd(e); break;
+      case 'transitionend': this.transitionEnd(e); break;*/
       //case 'resize': this.setup(); break;
     }
   },
@@ -129,12 +148,26 @@ ANDMAG.prototype = {
 		this.elementWidth = this.firstElement.getBoundingClientRect().width;
 
 
-		this.container.style.MozTransitionDuration = this.container.style.webkitTransitionDuration = duration + "ms";
-
+		/*this.container.style.webkitTransitionDuration =
+			this.container.style.MozTransitionDuration =
+				this.container.style.msTransitionDuration =
+					this.container.style.OTransitionDuration =
+						this.container.style.transitionDuration = duration + "ms";
+*/
 
 		if(this.index == index){
-			this.container.style.webkitTransform = "translate3d(0px,0px,0px)";
-			this.container.style.webkitTransitionDuration = duration +"ms";	
+
+			this.container.style.webkitTransform =
+				this.container.style.MozTransform =
+					this.container.style.msTransform =
+						this.container.style.OTransform =
+							this.container.style.transform = "translate3d(0px,0px,0px)";
+
+			this.container.style.webkitTransitionDuration =
+				this.container.style.MozTransitionDuration =
+					this.container.style.msTransitionDuration =
+						this.container.style.OTransitionDuration =
+							this.container.style.transitionDuration = duration + "ms";
 			return;
 		}
 
@@ -146,41 +179,76 @@ ANDMAG.prototype = {
 			this.amount = -this.elementWidth;
 		}
 
-		this.container.style.webkitTransitionDuration = duration + "ms";
+		this.container.style.webkitTransitionDuration =
+			this.container.style.MozTransitionDuration =
+				this.container.style.msTransitionDuration =
+					this.container.style.OTransitionDuration =
+						this.container.style.transitionDuration = duration + "ms";
 
-		this.container.style.webkitTransform = "translate3d(" + this.amount + "px,0px,0px)";
+
+		this.container.style.webkitTransform =
+			this.container.style.MozTransform =
+				this.container.style.msTransform =
+					this.container.style.OTransform =
+						this.container.style.transform = "translate3d(" + this.amount + "px,0px,0px)";
+
+		/*this.container.style.webkitTransform = "translate3d(" + this.amount + "px,0px,0px)";*/
 
 		this.animating = true;
-		
+
+		this.onTransitionEnd(index);
+
+		//that = this;
 		//flip around the elements
 		this.moveTimeoutID = setTimeout(function(that){
 			
 			//no animation while we shuffle elements
-			that.container.style.webkitTransitionDuration = "0ms";
+			that.container.style.webkitTransitionDuration =
+				that.container.style.MozTransitionDuration =
+					that.container.style.msTransitionDuration =
+						that.container.style.OTransitionDuration =
+							that.container.style.transitionDuration = "0ms";
+
 			if(that.moveNext == true){
-				//copy first to last position, special treatment for 2 elements
+				//copy first to last position
 				if(that.initialCount < 5){
-					var copyThisIndex = 5 - that.initialCount - 1;
-					that.container.removeChild(that.firstElement)
-					that.container.appendChild(that.container.children[copyThisIndex].cloneNode(true));
+					var copyThisIndex = 5 - that.initialCount;
+					that.firstElement.innerHTML = that.container.children[copyThisIndex].innerHTML;
+					/*that.container.appendChild(that.container.children[0].cloneNode(true));
+					that.container.removeChild(that.firstElement);*/
+					that.container.appendChild(that.firstElement);
+
 				}else{
 					that.container.appendChild(that.firstElement);
 				}
 			}else{
-				//copy last to first position, special treatment for 2 elements
+				//copy last to first position
 				if(that.initialCount < 5){
-					var copyThisIndex = that.initialCount-1;
-					that.container.removeChild(that.last);
-					that.container.insertBefore(that.container.children[copyThisIndex].cloneNode(true),that.container.children[0]);
+					var copyThisIndex = that.initialCount - 1;
+					that.last.innerHTML = that.container.children[copyThisIndex].innerHTML;
+					that.container.insertBefore(that.last,that.firstElement);
+					/*that.container.removeChild(that.last);
+					that.container.insertBefore(that.container.children[copyThisIndex].cloneNode(true),that.container.children[0]);*/
 				}else{
 					that.container.insertBefore(that.last,that.firstElement);
 				}
 			}
-			that.container.style.webkitTransform = "translate3d(0px,0px,0px)";
-			
+			that.container.style.webkitTransform =
+				that.container.style.MozTransform =
+					that.container.style.msTransform =
+						that.container.style.OTransform =
+							that.container.style.transform = "translate3d(0px,0px,0px)";
+
+			//send callback
+
+
 			//reset the animation duration back to normal
 			setTimeout(function(that){
-				that.container.style.webkitTransitionDuration = duration + "ms";					
+				that.container.style.webkitTransitionDuration =
+					that.container.style.MozTransitionDuration =
+						that.container.style.msTransitionDuration =
+							that.container.style.OTransitionDuration =
+								that.container.style.transitionDuration = duration + "ms";
 			},1,that);
 			that.animating = false;
 			
@@ -196,9 +264,14 @@ ANDMAG.prototype = {
 	prev: function(){
 		this.slide(this.index - 1);
 	},
-	transitionEnd: function(e) {    
+	onTransitionEnd: function(index) {
 
-	   // this.callback(e, this.index, this.slides[this.index]);
+
+		if(index < 0){
+			this.transitionEnd((this.initialCount - (Math.abs(index) % this.initialCount)) % this.initialCount);
+		}else{
+			this.transitionEnd(index % this.initialCount);
+		}
 
   	},
 	onTouchStart: function(e) {
@@ -210,9 +283,10 @@ ANDMAG.prototype = {
 	    	//the animating bool is sometimes not reset so we check time as well
 	    	if(Number( new Date() - this.lastTouchEnd)  < this.speed){
 		    	this.start = undefined;
+
 		    	return;
 	    	}else{
-	    		//continue
+				this.animating = false;
 	    	}
 	    }
 
@@ -242,7 +316,12 @@ ANDMAG.prototype = {
 	    this.deltaX = 0;
 
 	    // set transition time to 0 for 1-to-1 touch movement
-	    this.container.style.MozTransitionDuration = this.container.style.webkitTransitionDuration = 0;
+		this.container.style.webkitTransitionDuration =
+			this.container.style.MozTransitionDuration =
+				this.container.style.msTransitionDuration =
+					this.container.style.OTransitionDuration =
+						this.container.style.transitionDuration = "0ms";
+
 	    
 	    e.stopPropagation();
 	},
@@ -286,7 +365,13 @@ ANDMAG.prototype = {
 	      // translate immediately 1-to-1
 	      var iLikeToMovitMovit = this.deltaX;
 
-	      this.container.style.MozTransform = this.container.style.webkitTransform = 'translate3d(' + iLikeToMovitMovit + 'px,0,0)';
+			this.container.style.webkitTransform =
+				this.container.style.MozTransform =
+					this.container.style.msTransform =
+						this.container.style.OTransform =
+							this.container.style.transform = "translate3d(" + iLikeToMovitMovit + "px,0px,0px)";
+
+
 	      
 	      e.stopPropagation();
 	    }
@@ -301,21 +386,19 @@ ANDMAG.prototype = {
 
 	    // determine if slide attempt triggers next/prev slide
 	    var isValidSlide = 
-	          Number(new Date()) - this.start.time < 250      // if slide duration is less than 250ms
-	          && Math.abs(this.deltaX) > 20                   // and if slide amt is greater than 20px
-	          || Math.abs(this.deltaX) > this.width/3;        // or if slide amt is greater on third the width
-
-
+	          (Number(new Date()) - this.start.time < 250      // if slide duration is less than 250ms
+	          && Math.abs(this.deltaX) > 20)                   // and if slide amt is greater than 20px
+	          || (Math.abs(this.deltaX) > this.width/2);        // or if slide amt is greater on third the width
 
 
 	    // if not scrolling vertically
 	    if (!this.isScrolling) {
 
 	    	//speed things up!
-	    	var speed = Number(this.speed * (Math.abs(this.width-this.deltaX)/this.width) );
+	    	/*var speed = Number(this.speed * (Math.abs(this.width-this.deltaX)/this.width) ); */
 
 	      	// call slide function with slide end value based on isValidSlide test
-	      	this.slide( this.index + ( isValidSlide ? (this.deltaX < 0 ? 1 : -1) : 0 ), speed );
+	      	this.slide( this.index + ( isValidSlide ? (this.deltaX < 0 ? 1 : -1) : 0 ), this.speed );
 
 	    }
 	    
