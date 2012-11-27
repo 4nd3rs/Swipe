@@ -5,20 +5,42 @@
 <link href='style.css' rel='stylesheet'/>
 </head>
 <body>
+<img src="http://gfx.aftonbladet-cdn.se/image/15415922/499/normal/8b55cea916eda/aftonbladet.gif" alt="Aftonbladet" width="499" height="76" style="margin-top: 13px">  
+<div class="nav-wrapper">
+  <nav>
+    <ul>
+      <li><a href="">Start</a></li>
+      <li><a href="">Sport</a></li>
+      <li><a href="">Noje</a></li>
+      <li><a href="">Kultur</a></li>
+      <li><a href="">Debatt</a></li>
+      <li><a href="">Ledare</a></li>
+      <li><a href="">TV</a></li>    
+      <li><a href="">Start</a></li>
+      <li><a href="">Sport</a></li>
+      <li><a href="">Noje</a></li>
+      <li><a href="">Kultur</a></li>
+      <li><a href="">Debatt</a></li>
+      <li><a href="">Ledare</a></li>
+      <li><a href="">TV</a></li>   
+    </ul>
+  </nav>
+  <div class="fader"></div> 
+</div>
 
 <h1>Swipe</h1>
 
 <h2>2 images</h2>
 
-<div class="viewport">
-  <div class="swipe-container">
-    <div id="andmag2" class="swipe">
-      <div class="swipe-wrap">         
+<div style="background-color:white;" class="viewport">
+  <div style="background-color:red;" class="swipe-container">
+    <div style="background-color:gray;" id="andmag2" class="swipe">
+      <div style="background-color:pink;" class="swipe-wrap">         
         <div style="background-color:blue;" class="item-0">
-          <img src="images/001.jpg"/>
+          <a href="javascript:alert('2-1')"><img src="images/001.jpg"/></a>
         </div>
         <div style="background-color:green;" class="item-1">
-          <img src="images/002.jpg"/>
+          <a href="javascript:alert('2-2')"><img src="images/002.jpg"/></a>
         </div>  
       </div>
     </div>  
@@ -26,11 +48,11 @@
 </div>
 <div style="clear:both"></div>
 <div class="viewport2">
-  <a href='#' onclick='andmag2.prev();return false;'>prev</a> 
-  <a href='#' onclick='andmag2.next();return false;'>next</a>
+  <a href='javascript:void(0)' onclick='andmag2.prev();return false;'>prev</a> 
+  <a href='javascript:void(0)' onclick='andmag2.next();return false;'>next</a>
 </div>
 
-<h2>3 images</h2>
+ <h2>3 images</h2>
 
 <div class="viewport">
   <div class="swipe-container">
@@ -38,20 +60,20 @@
       <div class="swipe-wrap">      
         <div class="item-0">
           <div class="image-container">     
-            <img src="images/lofven1.jpeg"/>
-            <div class="caption">This is a text</div>
+            <a href="javascript:alert('3-1')"><img src="images/lofven1.jpeg"/>
+            <div class="caption">1- This is a text</div></a>
           </div>
         </div>
         <div class="item-1">
           <div class="image-container">     
-            <img src="images/lofven2.jpeg"/>
-            <div class="caption">This is a text</div>
+            <a href="javascript:alert('3-2')"><img src="images/lofven2.jpeg"/>
+            <div class="caption">2-This is a text</div></a>
           </div>
         </div>  
         <div class="item-2">
           <div class="image-container">     
-            <img src="images/lofven3.jpeg"/>
-            <div class="caption">This is a text</div>
+            <a href="javascript:alert('3-3')"><img src="images/lofven3.jpeg"/>
+            <div class="caption">3-This is a text</div></a>
           </div>  
         </div>
       </div>
@@ -72,15 +94,19 @@
       <div class="swipe-wrap">      
         <div style="background-color:blue;" class="item-0">
           <img src="images/001.jpg"/>
+          <div class="caption">1- This is a text</div>
         </div>
         <div style="background-color:green;" class="item-1">
           <img src="images/002.jpg"/>
+          <div class="caption">2- This is a text</div>
         </div>  
         <div style="background-color:red;" class="item-2">
           <img src="images/003.jpg"/>
+          <div class="caption">3- This is a text</div>
         </div>
         <div style="background-color:pink;" class="item-3">
           <img src="images/004.jpg"/>
+          <div class="caption">4- This is a text</div>
         </div>
       </div>
     </div>  
@@ -100,18 +126,23 @@
       <div class="swipe-wrap">      
         <div style="background-color:blue;" class="item-0">
           <img src="images/001.jpg"/>
+          <div class="caption">1- This is a text</div>
         </div>
         <div style="background-color:green;" class="item-1">
           <img src="images/002.jpg"/>
+          <div class="caption">2- This is a text</div>
         </div>  
         <div style="background-color:red;" class="item-2">
           <img src="images/003.jpg"/>
+          <div class="caption">3- This is a text</div>
         </div>
         <div style="background-color:pink;" class="item-3">
           <img src="images/004.jpg"/>
+          <div class="caption">4- This is a text</div>
         </div>
         <div style="background-color:grey;" class="item-4">
           <img src="images/005.jpg"/>
+          <div class="caption">5- This is a text</div>
         </div>
       </div>
     </div>  
@@ -121,17 +152,17 @@
 <div class="viewport2">
   <a href='#' onclick='andmag5.prev();return false;'>prev</a> 
   <a href='#' onclick='andmag5.next();return false;'>next</a>
-</div>
+</div> 
 
 <!-- <script src='swipe.js'></script> -->
 <script src='andmag.js'></script>
-<script>
-var andmag = new ANDMAG(document.getElementById('andmag'));
-var andmag2 = new ANDMAG(document.getElementById('andmag2'));
-var andmag3 = new ANDMAG(document.getElementById('andmag3'));
-var andmag4 = new ANDMAG(document.getElementById('andmag4'));
-var andmag5 = new ANDMAG(document.getElementById('andmag5'));
-</script>
+  <script>
+
+ var andmag2 = new Swipe(document.getElementById('andmag2'),{startSlide: 0});
+ var andmag3 = new Swipe(document.getElementById('andmag3'),{startSlide: 2});
+ var andmag4 = new Swipe(document.getElementById('andmag4'),{startSlide: 3});
+ var andmag5 = new Swipe(document.getElementById('andmag5'),{startSlide: 4});
+// </script>
 
 </body> 
 </html> 

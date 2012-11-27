@@ -1,3 +1,16 @@
+*{
+  -moz-user-select: -moz-none;
+   -khtml-user-select: none;
+   -webkit-user-select: none;
+   -ms-user-select: none;
+   user-select: none;
+
+   -webkit-user-drag:none;
+   use-drag:none;
+
+}
+
+
 html, body, div, span, object, iframe, h1, h2, h3, h4, h5, h6, p, del, dfn, em, img, ins, kbd, q, samp, small, strong, b, i, dl, dt, dd, ol, ul, li, fieldset, form, label, table, tbody, tfoot, thead, tr, th, td, article, aside, footer, header, nav, section {
   margin:0;
   padding:0;
@@ -40,7 +53,7 @@ a {
 .swipe-container{
   width:90%;
   margin: 0 auto;
-  visibility:hidden;
+  /*visibility:hidden;*/
 }
 
 img{
@@ -51,9 +64,8 @@ img{
 }
 
 .swipe {
-  overflow: hidden;
-  display:block;
   
+  display:block;
   width:100%;
   left:0;
   top:0;
@@ -68,7 +80,7 @@ img{
 }
 .swipe-wrap  > div {  
   
-  width: 90%;
+  width: 100%;
   
   
   position:relative;
@@ -88,10 +100,10 @@ img{
 .viewport{
   position:relative;
   
-  width:100%;
+  max-width:640px;
   margin: 0 auto;
   display:block;
-  
+  overflow:hidden;
 
 
 }
@@ -109,7 +121,63 @@ img{
 
 .viewport2{
   text-align: center;
-  margin-top: 80px;
 }
+
+nav{
+  background-color:gray;
+  overflow-y: hidden;
+  overflow-x:scroll;
+  word-break: keep-all;
+  -webkit-overflow-scrolling: touch;
+  height:44px;
+}
+
+nav::-webkit-scrollbar, nav ul::-webkit-scrollbar { 
+  width: 0 !important 
+}
+
+nav ul{
+  width:1020px;
+  overflow-y:hidden;
+}
+
+nav ul li{
+  float:left;
+}
+nav ul li a{
+  padding: 10px 5px;
+  border-right: 1px solid white;
+  display:block;
+  font-size:1.2em;
+  text-decoration: none;
+}
+ul,li{
+  list-style: none;
+}
+nav:after{
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+.nav-wrapper{
+  position:relative;
+}
+
+.fader{
+  width:40px;
+  height:44px;
+  position:absolute;
+  top:0; right:0;
+  /*background-image: linear-gradient(to bottom, red, blue );*/
+  background-image: -webkit-linear-gradient(left, rgba(0,0,0,0.0), rgba(0,0,0,0.8));  
+  /*background-color: rgba(0,0,0,0.5);*/
+}
+
+
+
+
 
 
